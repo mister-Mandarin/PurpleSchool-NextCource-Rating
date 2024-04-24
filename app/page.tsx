@@ -3,28 +3,15 @@ import Htag from '@/components/Htag/Htag';
 import Button from '@/components/Button/Button';
 import Tag from '@/components/Tag/Tag';
 import Rating from '@/components/Rating/Rating';
-import {API} from '@/app/api';
-import {MenuItem} from '@/interfaces/menu.interface';
-
-async function getMenu(firstCategory: number) {
-	const response = await fetch(API.topPage.find, {
-		method: 'POST',
-		body: JSON.stringify({
-			firstCategory
-		}),
-		headers: new Headers({'Content-Type': 'application/json'})
-	});
-	return response.json();
-}
-
+import {getMenu} from '@/api/menu';
+  
 export default async function Home() {
 
 	//const [rating, setRating] = useState(4);
-	const menu = await getMenu(1);
 
+	// const menu = JSON.stringify(res);
 	return (
 		<main className={styles.main}>
-			<div>{JSON.stringify(menu.length)}</div>
 			<Htag level={1}>Hello!</Htag>
 			<Htag level={2}>Hello!</Htag>
 			<Htag level={3}>Hello!</Htag>

@@ -23,7 +23,7 @@ export default async function PageProduct({params}: { params: { alias: string } 
 
 	return (
 		<div>Страница params.alias {params.alias}
-			<p>page.title {page.title}</p>
+			<p>page.title {page.alias}</p>
 		</div>
 	);
 }

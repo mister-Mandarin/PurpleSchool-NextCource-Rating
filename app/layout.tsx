@@ -3,8 +3,8 @@ import {Noto_Sans} from 'next/font/google';
 import './globals.css';
 import styles from './layout.module.css';
 import {ReactNode} from 'react';
-import Header from '@/layout/Header/Header';
-import Sidebar from '@/layout/Sidebar/Sidebar';
+import Header from '@/layout/Menu/Header/Header';
+import Sidebar from '@/layout/Menu/Sidebar/Sidebar';
 import Footer from '@/layout/Footer/Footer';
 import cn from 'classnames';
 
