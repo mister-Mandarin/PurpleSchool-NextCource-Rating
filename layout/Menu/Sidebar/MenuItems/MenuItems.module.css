@@ -53,12 +53,14 @@
 
 .thirdLevel {
     display: block;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
     cursor: pointer;
     color: var(--gray-dark);
     outline-offset: -1px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
+    border-left: 1px solid #DFDFDF;
+    padding-left: 10px;
 }
 
 .thirdLevelActive,
