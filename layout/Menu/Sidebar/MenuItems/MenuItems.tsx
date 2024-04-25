@@ -12,26 +12,24 @@ import {useLocalStorage} from '@/hooks/useLocalStorage';
 import {usePathname, useRouter} from 'next/navigation';
 
 const firstLevelMenu: FirstLevelMenuItem[] = [
-	{ route: 'courses', name: 'Курсы', icon: <CoursesIcon />, id: TopLevelCategory.Courses },
-	{ route: 'services', name: 'Сервисы', icon: <ServicesIcon />, id: TopLevelCategory.Services },
-	{ route: 'books', name: 'Книги', icon: <BooksIcon />, id: TopLevelCategory.Books },
-	{ route: 'products', name: 'Продукты', icon: <ProductsIcon />, id: TopLevelCategory.Products }
+	{route: 'courses', name: 'Курсы', icon: <CoursesIcon/>, id: TopLevelCategory.Courses},
+	{route: 'services', name: 'Сервисы', icon: <ServicesIcon/>, id: TopLevelCategory.Services},
+	{route: 'books', name: 'Книги', icon: <BooksIcon/>, id: TopLevelCategory.Books},
+	{route: 'products', name: 'Продукты', icon: <ProductsIcon/>, id: TopLevelCategory.Products}
 ];
 
 
 interface MenuItemsProps {
-	secondMenu: MenuItem[];
+    allMenus: [MenuItem[]];
 }
 
-export default function MenuItems({secondMenu}: MenuItemsProps, {params}: { params: { alias: string } }){
-	//const secondMenu = await getMenu(firstCategory);
-	//const secondMenuItems = secondMenu;
+export default function MenuItems({allMenus}: MenuItemsProps) {
+
 	const {storedValue} = useLocalStorage('store');
 	const firstCategory: number = Number(storedValue.firstCategory);
 	const pathname = usePathname();
 
-	function buildFirstLevel () {
-		console.log('pathname ', pathname);
+	function buildFirstLevel() {
 		return (
 			<ul className={styles.firstLevelList}>
 				{firstLevelMenu.map(menu => (
@@ -45,21 +43,23 @@ export default function MenuItems({secondMenu}: MenuItemsProps, {params}: { para
 						{menu.id == firstCategory && buildSecondLevel(menu)}
 					</li>
 				))}
-			</ul> 
+			</ul>
 		);
 	}
-	
+
 	function buildSecondLevel(menuFromFirstLvl: FirstLevelMenuItem) {
 		return (
 			<ul className={styles.secondBlock}>
-				{secondMenu.map(menu => (
+				{allMenus[firstCategory].map(menu => (
 					<li key={menu._id.secondCategory}>
 						<button className={styles.secondLevel}>
-							<div className={styles.secondLevelBlock}>
-								{menu._id.secondCategory}
-							</div>
+							{menu._id.secondCategory}
 						</button>
-						{buildThirdLevel(menu.pages, menuFromFirstLvl.route)}
+						<div className={cn(styles.secondLevelBlock, {
+							[styles.secondLevelBlockOpened]: menu._id.secondCategory == storedValue.secondCategory
+						})}>
+							{buildThirdLevel(menu.pages, menuFromFirstLvl.route)}
+						</div>
 					</li>
 				))}
 			</ul>
@@ -68,16 +68,18 @@ export default function MenuItems({secondMenu}: MenuItemsProps, {params}: { para
 
 	function buildThirdLevel(menuFromSecondLvl: PageItem[], menuFromFirstLvl: string) {
 		return (
-			<div>
+			<>
 				{menuFromSecondLvl.map(menu => (
-					<Link key={menu._id} href={`${menu.alias}`}
-						  className={cn(styles.thirdLevel, {
-							  // tuta [styles.thirdLevelActive]: menu.alias == pathname
-						  })}>
-						{menu.title}<br />
+					<Link
+						key={menu._id}
+						href={`/${menuFromFirstLvl}/${menu.alias}`}
+						className={cn(styles.thirdLevel, {
+							[styles.thirdLevelActive]: `/${menuFromFirstLvl}/${menu.alias}` == pathname
+						})}>
+						{menu.title}
 					</Link>
 				))}
-			</div>
+			</>
 		);
 	}
 

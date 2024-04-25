@@ -2,6 +2,7 @@ import {getPage} from '@/api/page';
 import {notFound} from 'next/navigation';
 import {getMenu} from '@/api/menu';
 import {pages} from 'next/dist/build/templates/app-page';
+import NotFound from '@/app/courses/[alias]/not-found';
 
 
 // // generateStaticParams зарезервированно!
@@ -23,7 +24,6 @@ export default async function PageCourse({params}: { params: { alias: string } }
 
 	return (
 		<div>Страница params.alias {params.alias}
-			<p>page.title {page.alias}</p>
 		</div>
 	);
 }
