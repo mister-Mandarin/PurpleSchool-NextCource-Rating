@@ -1,5 +1,5 @@
 export interface DefaultStateProps {
     firstCategory: number;
-    secondCategory?: string;
-    thirdCategory?: string;
+    secondCategory: string;
+    thirdCategory: string;
 }

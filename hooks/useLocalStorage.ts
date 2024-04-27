@@ -11,34 +11,38 @@ const DEFAULT_STATE: DefaultStateProps = {
 
 export const useLocalStorage = (key: string) => {
 	const [storedValue, setStoredValue] = useState<DefaultStateProps>(
-		DEFAULT_STATE
+		() => {
+			return getValue() || DEFAULT_STATE;
+		}
 	);
 
-	const getValue = () => {
-		try {
-			const item = window.localStorage.getItem(key) ;
+	useEffect(() => {
+		setValue(getValue());
+	}, [key]);
+
+	function getValue() {
+		if (typeof window !== 'undefined') {
+			// Client-side-only code
+			const item = localStorage.getItem(key) ;
+			if (!item)  {
+				localStorage.setItem(key, JSON.stringify(DEFAULT_STATE));
+				getValue();
+				return;
+			}
 			return item ? JSON.parse(item) : DEFAULT_STATE;
-		} catch (error) {
-			console.error(error);
-			return DEFAULT_STATE;
 		}
 	};
 
 	const setValue = (value: DefaultStateProps) => {
 		try {
-			const valueToStore =
-                value instanceof Function ? value(storedValue) : value;
+			const valueToStore = value instanceof Function ? value(storedValue) : value;
 			setStoredValue(valueToStore);
-			//console.log('valueToStore', valueToStore);
-			window.localStorage.setItem(key, JSON.stringify(valueToStore));
+
+			localStorage.setItem(key, JSON.stringify(valueToStore));
 		} catch (error) {
 			console.error(error);
 		}
 	};
-
-	useEffect(() => {
-		setValue(getValue());
-	}, [key]);
 
 	return {storedValue, setValue};
 };

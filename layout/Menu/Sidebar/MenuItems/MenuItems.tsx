@@ -1,46 +1,68 @@
 'use client';
-import {FirstLevelMenuItem, MenuItem, PageItem} from '@/interfaces/menu.interface';
-import {TopLevelCategory} from '@/interfaces/page.interface';
-import CoursesIcon from './icons/courses.svg';
-import ServicesIcon from './icons/services.svg';
-import BooksIcon from './icons/books.svg';
-import ProductsIcon from './icons/books.svg';
+import {AllMenuItemsProps, FirstLevelMenuItem, MenuItem, PageItem} from '@/interfaces/menu.interface';
 import Link from 'next/link';
 import cn from 'classnames';
 import styles from './MenuItems.module.css';
 import {useLocalStorage} from '@/hooks/useLocalStorage';
 import {usePathname, useRouter} from 'next/navigation';
-
-const firstLevelMenu: FirstLevelMenuItem[] = [
-	{route: 'courses', name: 'Курсы', icon: <CoursesIcon/>, id: TopLevelCategory.Courses},
-	{route: 'services', name: 'Сервисы', icon: <ServicesIcon/>, id: TopLevelCategory.Services},
-	{route: 'books', name: 'Книги', icon: <BooksIcon/>, id: TopLevelCategory.Books},
-	{route: 'products', name: 'Продукты', icon: <ProductsIcon/>, id: TopLevelCategory.Products}
-];
+import {firstLevelMenu} from '@/helpers/helpers';
 
 
-interface MenuItemsProps {
-    allMenus: [MenuItem[]];
-}
 
-export default function MenuItems({allMenus}: MenuItemsProps) {
+export default function MenuItems({allMenus}: AllMenuItemsProps) {
 
-	const {storedValue} = useLocalStorage('store');
-	const firstCategory: number = Number(storedValue.firstCategory);
+	const {storedValue, setValue} = useLocalStorage('store');
 	const pathname = usePathname();
+
+	function setOpenedFirstLvl(value: number) {
+		const newValue = {
+			firstCategory: value,
+			secondCategory: '',
+			thirdCategory: ''
+		};
+
+		setValue({
+			...storedValue, ...newValue
+		});
+	}
+
+	function setOpenedSecondLvl(value: string) {
+		const newValue = {
+			firstCategory: storedValue.firstCategory,
+			secondCategory: value,
+			thirdCategory: ''
+		};
+
+		setValue({
+			...storedValue, ...newValue
+		});
+	}
+
+	function setOpenedThirdLvl(value: string) {
+		const newValue = {
+			firstCategory: storedValue.firstCategory,
+			secondCategory: storedValue.secondCategory,
+			thirdCategory: value
+		};
+
+		setValue({
+			...storedValue, ...newValue
+		});
+	}
 
 	function buildFirstLevel() {
 		return (
 			<ul className={styles.firstLevelList}>
 				{firstLevelMenu.map(menu => (
 					<li key={menu.route}>
-						<Link href={`${menu.route}`} className={cn(styles.firstLevel, {
-							[styles.firstLevelActive]: menu.id == firstCategory
-						})}>
+						<button className={cn(styles.firstLevel, {
+							[styles.firstLevelActive]: menu.id == storedValue.firstCategory
+						})}
+						onClick={() => setOpenedFirstLvl(menu.id)}>
 							{menu.icon}
 							<span>{menu.name}</span>
-						</Link>
-						{menu.id == firstCategory && buildSecondLevel(menu)}
+						</button>
+						{menu.id == storedValue.firstCategory && buildSecondLevel(menu)}
 					</li>
 				))}
 			</ul>
@@ -48,11 +70,24 @@ export default function MenuItems({allMenus}: MenuItemsProps) {
 	}
 
 	function buildSecondLevel(menuFromFirstLvl: FirstLevelMenuItem) {
+
+		if (allMenus[storedValue.firstCategory].length === 0) {
+			return (
+				<ul className={styles.secondBlock}>
+					<li className={styles.secondLevel}>
+						Нет данных
+					</li>
+				</ul>
+			);
+		}
+
 		return (
 			<ul className={styles.secondBlock}>
-				{allMenus[firstCategory].map(menu => (
+				{allMenus[storedValue.firstCategory].map(menu => (
 					<li key={menu._id.secondCategory}>
-						<button className={styles.secondLevel}>
+						<button className={styles.secondLevel}
+							onClick={() => setOpenedSecondLvl(menu._id.secondCategory)}
+						>
 							{menu._id.secondCategory}
 						</button>
 						<div className={cn(styles.secondLevelBlock, {
@@ -67,6 +102,7 @@ export default function MenuItems({allMenus}: MenuItemsProps) {
 	}
 
 	function buildThirdLevel(menuFromSecondLvl: PageItem[], menuFromFirstLvl: string) {
+
 		return (
 			<>
 				{menuFromSecondLvl.map(menu => (
@@ -75,7 +111,9 @@ export default function MenuItems({allMenus}: MenuItemsProps) {
 						href={`/${menuFromFirstLvl}/${menu.alias}`}
 						className={cn(styles.thirdLevel, {
 							[styles.thirdLevelActive]: `/${menuFromFirstLvl}/${menu.alias}` == pathname
-						})}>
+						})}
+						onClick={()=> setOpenedThirdLvl(menu.alias)}
+					>
 						{menu.title}
 					</Link>
 				))}

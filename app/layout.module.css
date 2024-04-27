@@ -8,6 +8,7 @@
             '. sidebar body .'
             'footer footer footer footer';
     gap: 0 30px;
+    margin-top: 40px;
 }
 
 .header {

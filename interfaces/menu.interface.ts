@@ -21,3 +21,7 @@ export interface FirstLevelMenuItem {
     icon: JSX.Element;
     id: TopLevelCategory;
 }
+
+export interface AllMenuItemsProps {
+    allMenus: MenuItem[][];
+}
