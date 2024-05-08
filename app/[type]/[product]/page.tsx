@@ -1,19 +1,19 @@
-import {getPage} from '@/api/page';
 import {notFound} from 'next/navigation';
-import {getMenu} from '@/api/menu';
-import {pages} from 'next/dist/build/templates/app-page';
-import NotFound from '@/app/[type]/[product]/not-found';
 import {firstLevelMenu, getAllMenus} from '@/helpers/helpers';
 
 interface Params {
-	type: string;
-	product: string[];
+    type: string;
+    product: string;
 }
 
 async function getSecondLvlPaths(id: number) {
 	const allMenus = await getAllMenus();
 	return allMenus[id].flatMap(menu2 => menu2.pages.map(menu3 => menu3.alias));
 }
+
+// 3 сука дня ушло на то, чтобы написать правильно generateStaticParams и собрался проект
+// надо лучше гуглить и читать документацию. Я крут)))
+
 
 // generateStaticParams зарезервированно!
 // Нужна для статического создания маршрутов во время сборки проекта
@@ -22,20 +22,20 @@ export async function generateStaticParams() {
 	const promises = firstLevelMenu.map(menu1 => getSecondLvlPaths(menu1.id));
 	const secondLvlPathsPromises = await Promise.all(promises);
 
-	const params1 = firstLevelMenu.map(product => {
-		const menuPaths = secondLvlPathsPromises[product.id];
-		//console.log('menuPaths ', menuPaths);
-		return {
-			type: product.route,
-			product: menuPaths.map(menuPath => menuPath)
-		};
-	});
+	const paths = firstLevelMenu.flatMap((menu1, index) => {
+		const menuPaths = secondLvlPathsPromises[index];
+		return menuPaths.map(s => ({
+			type: menu1.route,
+			product: s
 
-	console.log('params1 ', params1);
-	return params1;
+		}));
+	});
+	//console.log('paths ', paths);
+
+	return paths;
 }
 
-export default async function PageCourse({params}: { params: {type: string,  product: string } }) {
+export default async function PageCourse({params}: { params: { type: string, product: string } }) {
 
 	const firstCategoryItem = firstLevelMenu.find(menu => menu.route == params.type);
 	if (firstCategoryItem) {
@@ -46,7 +46,6 @@ export default async function PageCourse({params}: { params: {type: string,  pro
 			notFound();
 		}
 	} else notFound();
-
 
 
 	return (
