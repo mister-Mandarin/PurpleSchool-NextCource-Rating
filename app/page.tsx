@@ -3,7 +3,7 @@ import Htag from '@/components/Htag/Htag';
 import Button from '@/components/Button/Button';
 import Tag from '@/components/Tag/Tag';
 import Rating from '@/components/Rating/Rating';
-import {getMenu} from '@/api/menu';
+import {getMenu} from '@/api/getMenu';
   
 export default async function Home() {
 

@@ -4,7 +4,7 @@ import {TopLevelCategory} from '@/interfaces/page.interface';
 import ServicesIcon from '@/helpers/icons/services.svg';
 import BooksIcon from '@/helpers/icons/books.svg';
 import ProductsIcon from '@/helpers/icons/products.svg';
-import {getMenu} from '@/api/menu';
+import {getMenu} from '@/api/getMenu';
 
 export const firstLevelMenu: FirstLevelMenuItem[] = [
 	{route: 'courses', name: 'Курсы', icon: <CoursesIcon/>, id: TopLevelCategory.Courses},
@@ -21,3 +21,11 @@ export async function getAllMenus(): Promise<MenuItem[][]>{
 	}
 	return allMenus;
 }
+
+// https://learn.javascript.ru/intl
+export const priceRuIntl = (price: number): string =>
+	new Intl.NumberFormat('ru-RU', {
+		style: 'currency',
+		currency: 'RUB',
+		minimumFractionDigits: 0
+	}).format(price);

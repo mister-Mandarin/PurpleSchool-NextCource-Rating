@@ -5,21 +5,6 @@ export enum TopLevelCategory {
     Products
 }
 
-export interface TopPageAdvantage {
-    _id: string;
-    title: string;
-    description: string;
-}
-
-export interface HhData {
-    _id: string;
-    count: number;
-    juniorSalary: number;
-    middleSalary: number;
-    seniorSalary: number;
-    updatedAt: Date;
-}
-
 export interface TopPageModel {
     tags: string[];
     _id: string;
@@ -35,5 +20,20 @@ export interface TopPageModel {
     advantages?: TopPageAdvantage[];
     createdAt: Date;
     updatedAt: Date;
-    hh?: HhData;
+    hh?: HhDataProps;
+}
+
+export interface TopPageAdvantage {
+    _id: string;
+    title: string;
+    description: string;
+}
+
+export interface HhDataProps {
+    _id: string;
+    count: number;
+    juniorSalary: number;
+    middleSalary: number;
+    seniorSalary: number;
+    updatedAt: Date;
 }

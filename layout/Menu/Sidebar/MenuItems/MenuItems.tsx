@@ -1,12 +1,11 @@
 'use client';
-import {AllMenuItemsProps, FirstLevelMenuItem, MenuItem, PageItem} from '@/interfaces/menu.interface';
+import {AllMenuItemsProps, FirstLevelMenuItem, PageItem} from '@/interfaces/menu.interface';
 import Link from 'next/link';
 import cn from 'classnames';
 import styles from './MenuItems.module.css';
 import {useLocalStorage} from '@/hooks/useLocalStorage';
-import {usePathname, useRouter} from 'next/navigation';
+import {usePathname} from 'next/navigation';
 import {firstLevelMenu} from '@/helpers/helpers';
-
 
 
 export default function MenuItems({allMenus}: AllMenuItemsProps) {

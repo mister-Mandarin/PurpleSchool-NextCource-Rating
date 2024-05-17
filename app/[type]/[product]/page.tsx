@@ -1,5 +1,8 @@
 import {notFound} from 'next/navigation';
 import {firstLevelMenu, getAllMenus} from '@/helpers/helpers';
+import ProductPage from '@/components/ProductPage/ProductPage';
+import {getPageByAlias} from '@/api/getPageByAlias';
+import {TopPageModel} from '@/interfaces/page.interface';
 
 interface Params {
     type: string;
@@ -30,7 +33,6 @@ export async function generateStaticParams() {
 
 		}));
 	});
-	//console.log('paths ', paths);
 
 	return paths;
 }
@@ -47,11 +49,14 @@ export default async function PageCourse({params}: { params: { type: string, pro
 		}
 	} else notFound();
 
+	const CurrentPageData = await getPageByAlias(params.product);
 
-	return (
-		<div>
-			<p>Страница params.type {params.type}</p>
-			<p>Страница params.alias {params.product}</p>
-		</div>
-	);
+
+
+	return <ProductPage firstCategoryItem={firstCategoryItem} CurrentPageData={CurrentPageData}/>
+	// <div>
+	// 	<p>Страница params.type {params.type}</p>
+	// 	<p>Страница params.alias {params.product}</p>
+	// </div>
+	;
 }

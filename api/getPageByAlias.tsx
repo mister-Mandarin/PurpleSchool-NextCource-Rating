@@ -1,7 +1,7 @@
 import {API} from '@/app/api';
 import {TopPageModel} from '@/interfaces/page.interface';
 
-export async function getPage(alias: string): Promise<TopPageModel | null> {
+export async function getPageByAlias(alias: string): Promise<TopPageModel | null> {
 
 	// задержка для имитации задержки
 	// await new Promise((res) => setTimeout(() => {

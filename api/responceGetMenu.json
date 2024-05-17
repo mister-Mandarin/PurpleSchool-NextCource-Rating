@@ -1,0 +1,88 @@
+[
+  {
+    "_id": {
+      "secondCategory": "Аналитика"
+    },
+    "pages": [
+      {
+        "alias": "financial-analytics",
+        "title": "Курсы по финансовой аналитике",
+        "_id": "6068cc76d084b85d3f1abf56",
+        "category": "Финансовая аналитика"
+      },
+      {
+        "alias": "big-data",
+        "title": "Курсы по Big Data",
+        "_id": "606e9acae35aa0914a4ea834",
+        "category": "Big Data"
+      },
+      {
+        "alias": "data-science",
+        "title": "Курсы по Data Science",
+        "_id": "606e9b4ce35aa002e74ea835",
+        "category": "Data Science"
+      },
+      {
+        "alias": "machine-learning",
+        "title": "Курсы по машинному обучению",
+        "_id": "606e9bc1e35aa0ed184ea836",
+        "category": "Машинное обучение"
+      },
+      {
+        "alias": "excel",
+        "title": "Курсы Excel",
+        "_id": "61055589468b5529b92acf77",
+        "category": "Excel"
+      },
+      {
+        "alias": "business-analytics",
+        "title": "Курсы по бизнес-аналитике",
+        "_id": "61b910e2f73c5eb5542c9d68",
+        "category": "Бизнес аналитика"
+      },
+      {
+        "alias": "analytics-for-executives",
+        "title": "Курсы аналитики для руководителей",
+        "_id": "61b91da3f73c5ecb192ca108",
+        "category": "Аналитика для руководителей"
+      },
+      {
+        "alias": "power-bi",
+        "title": "Курсы аналитики Power BI",
+        "_id": "61b91db1f73c5e0c3e2ca10f",
+        "category": "Аналитика Power BI"
+      },
+      {
+        "alias": "data-analytics",
+        "title": "Курсы по аналитике данных",
+        "_id": "61ba6d8bf73c5e63482e01ec",
+        "category": "Аналитика данных"
+      },
+      {
+        "alias": "system-analytics",
+        "title": "Курсы по системной аналитике",
+        "_id": "61ba6e21f73c5e512b2e01f8",
+        "category": "Системная аналитика"
+      }
+    ]
+  },
+  {
+    "_id": {
+      "secondCategory": "Бизнес"
+    },
+    "pages": [
+      {
+        "alias": "finansovaya-gramotnost",
+        "title": "Курсы финансовой грамотности",
+        "_id": "6072eadce35aa07a784ea9b3",
+        "category": "Финансовая грамотность"
+      },
+      {
+        "alias": "entrepreneurs",
+        "title": "Курсы предпринимательства",
+        "_id": "6073095ae35aa03b954ea9b7",
+        "category": "Предпринимательство"
+      }
+    ]
+  }
+  ]
