@@ -5,7 +5,7 @@ import {HTMLAttributes, ReactNode} from 'react';
 interface TagProps extends HTMLAttributes<HTMLDivElement> {
     size?: 's' | 'm';
     children: ReactNode;
-    color?: 'ghost' | 'red' | 'grey' | 'green' | 'primary';
+    color?: 'ghost' | 'red' | 'grey' | 'green' | 'primary' | 'grayBlue';
     href?: string;
 }
 
@@ -19,7 +19,8 @@ export default function Tag({size = 's', children, color = 'ghost', href, classN
 				[styles.red]: color == 'red',
 				[styles.grey]: color == 'grey',
 				[styles.green]: color == 'green',
-				[styles.primary]: color == 'primary'
+				[styles.primary]: color == 'primary',
+				[styles.grayBlue]: color == 'grayBlue'
 			})}
 			{...props}
 		>

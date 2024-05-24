@@ -8,8 +8,6 @@ export function generateStaticParams() {
 	return firstLevelMenu.map(menu => ({
 		type: menu.route
 	}));
-	// console.log('params type ', params);
-	//return params;
 }
 
 export default async function PageCourse({params}: { params: { type: string } }) {

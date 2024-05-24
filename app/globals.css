@@ -3,7 +3,7 @@
     --gray-light: #EBEBEB;
     --gray: #A4A4A4;
     --gray-dark: #6C7077;
-    --white: white;
+    --gray-blue: #B3C0D9;
     --primary: #7351F5;
     --primary-hover: #6344DF;
     --red-light: #FEA291;
@@ -11,6 +11,7 @@
     --green: #1DC47E;
     --green-light: #C8F8E4;
     --white-gray: #F5F6F8;
+    --white: white;
 }
 
 html,

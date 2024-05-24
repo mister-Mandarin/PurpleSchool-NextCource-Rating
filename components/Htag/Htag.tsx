@@ -1,15 +1,17 @@
 import {ReactNode} from 'react';
 import styles from './Htag.module.css';
+import cn from 'classnames';
 
 interface ITitleProps {
     level?: 1 | 2 | 3;
     children: ReactNode;
+    className?: string;
 }
 
-export default function Htag({level = 1, children}: ITitleProps) {
+export default function Htag({level = 1, children, className}: ITitleProps) {
 	const tagName: `h${typeof level}` = `h${level}`;
-	const className = styles[tagName] || '';
+	const classStyle = styles[tagName] || '';
 	const Component = tagName;
 
-	return <Component className={className}>{children}</Component>;
+	return <Component className={cn(className, classStyle)}>{children}</Component>;
 };

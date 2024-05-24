@@ -74,7 +74,7 @@ export default function MenuItems({allMenus}: AllMenuItemsProps) {
 			return (
 				<ul className={styles.secondBlock}>
 					<li className={styles.secondLevel}>
-						Нет данных
+                        Нет данных
 					</li>
 				</ul>
 			);
@@ -111,7 +111,7 @@ export default function MenuItems({allMenus}: AllMenuItemsProps) {
 						className={cn(styles.thirdLevel, {
 							[styles.thirdLevelActive]: `/${menuFromFirstLvl}/${menu.alias}` == pathname
 						})}
-						onClick={()=> setOpenedThirdLvl(menu.alias)}
+						onClick={() => setOpenedThirdLvl(menu.alias)}
 					>
 						{menu.title}
 					</Link>

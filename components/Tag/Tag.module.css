@@ -2,7 +2,7 @@
     display: inline-block;
 
     box-sizing: border-box;
-    margin-right: 5px;
+    margin-right: 10px;
 
     border-radius: 20px;
 }
@@ -50,4 +50,9 @@
     color: var(--primary);
     border: 1px solid var(--primary);
     background: none;
+}
+
+.grayBlue {
+    color: var(--white);
+    background: var(--gray-blue);
 }

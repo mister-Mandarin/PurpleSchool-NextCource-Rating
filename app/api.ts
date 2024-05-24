@@ -9,6 +9,7 @@ export const API = {
 	},
 	product: {
 		find: process.env.NEXT_PUBLIC_DOMAIN + '/api/product/find'
+		// данные по алиасу С БОЛЬШОЙ БУКВЫ. "category": "Excel"
 	},
 	review: {
 		createDemo: process.env.NEXT_PUBLIC_DOMAIN + '/api/review/create-demo'

@@ -1,7 +1,7 @@
 import {API} from '@/app/api';
 import {TopPageModel} from '@/interfaces/page.interface';
 
-export async function getPageByAlias(alias: string): Promise<TopPageModel | null> {
+export async function getPageByAlias(alias: string): Promise<TopPageModel> {
 
 	// задержка для имитации задержки
 	// await new Promise((res) => setTimeout(() => {
@@ -11,8 +11,5 @@ export async function getPageByAlias(alias: string): Promise<TopPageModel | null
 		next: {revalidate: 10}
 	});
 
-	if (!res.ok) {
-		return null;
-	}
 	return res.json();
 }
