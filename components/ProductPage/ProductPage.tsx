@@ -15,7 +15,7 @@ interface ProductPageProps {
 
 export default function ProductPage({firstCategoryItem, CurrentPageData, CurrentProductData}: ProductPageProps) {
 	return (
-		<div>
+		<>
 			<div className={styles.title}>
 				<Htag level={1}>{CurrentPageData.title}</Htag>
 				{CurrentProductData && <Tag color='grayBlue' size='m'>{CurrentProductData.length}</Tag>}
@@ -43,6 +43,6 @@ export default function ProductPage({firstCategoryItem, CurrentPageData, Current
 				<Htag className={styles.skillsTitle} level={2}>Получаемые навыки</Htag>
 				{CurrentPageData.tags.map(t => <Tag key={t} color='primary'>{t}</Tag>)}
 			</div>
-		</div>
+		</>
 	);
 };
