@@ -6,6 +6,7 @@ import Tag from '@/components/Tag/Tag';
 import {ProductModel} from '@/interfaces/product.interface';
 import styles from './ProductPage.module.css';
 import Advantages from '@/components/Advantages/Advantages';
+import DataProduct from '@/components/DataProduct/DataProduct';
 
 interface ProductPageProps {
     firstCategoryItem: FirstLevelMenuItem,
@@ -16,11 +17,7 @@ interface ProductPageProps {
 export default function ProductPage({firstCategoryItem, CurrentPageData, CurrentProductData}: ProductPageProps) {
 	return (
 		<>
-			<div className={styles.title}>
-				<Htag level={1}>{CurrentPageData.title}</Htag>
-				{CurrentProductData && <Tag color='grayBlue' size='m'>{CurrentProductData.length}</Tag>}
-				<span>Сортировка</span>
-			</div>
+			<DataProduct CurrentPageData={CurrentPageData} CurrentProductData={CurrentProductData} />
 			<div className={styles.hhTitle}>
 				<Htag level={2}>Вакансии - {CurrentPageData.category}</Htag>
 				<Tag color='red' size='m'>hh.ru</Tag>

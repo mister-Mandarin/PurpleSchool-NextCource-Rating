@@ -1,6 +1,6 @@
 import {notFound} from 'next/navigation';
 import {firstLevelMenu, getAllMenus} from '@/helpers/helpers';
-import ProductPage from '@/components/ProductPage/ProductPage';
+import ProductPage from '@/Pages/ProductPage/ProductPage';
 import {getPageByAlias} from '@/api/getPageByAlias';
 import {TopPageModel} from '@/interfaces/page.interface';
 import {getProducts} from '@/api/products';
