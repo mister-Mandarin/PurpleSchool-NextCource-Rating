@@ -3,50 +3,37 @@ import {AllMenuItemsProps, FirstLevelMenuItem, PageItem} from '@/interfaces/menu
 import Link from 'next/link';
 import cn from 'classnames';
 import styles from './MenuItems.module.css';
-import {useLocalStorage} from '@/hooks/useLocalStorage';
 import {usePathname} from 'next/navigation';
 import {firstLevelMenu} from '@/helpers/helpers';
+import {DefaultStateProps} from '@/interfaces/store.interface';
+import {SortEnum} from '@/components/Sort/Sort.props';
+import {useState} from 'react';
 
+const DEFAULT_STATE: DefaultStateProps = {
+	firstCategory: -1,
+	secondCategory: '',
+	thirdCategory: '',
+	sort: SortEnum.Rating
+};
 
 export default function MenuItems({allMenus}: AllMenuItemsProps) {
 
-	const {storedValue, setValue} = useLocalStorage('store');
+	const [storedValue, setValue] = useState(DEFAULT_STATE);
 	const pathname = usePathname();
 
-	function setOpenedFirstLvl(value: number) {
-		const newValue = {
-			firstCategory: value,
-			secondCategory: '',
-			thirdCategory: ''
-		};
 
-		setValue({
-			...storedValue, ...newValue
-		});
-	}
+	function setOpenedCategory(level: 'firstCategory' | 'secondCategory' | 'thirdCategory', value: number | string) {
+		const newValue: DefaultStateProps = { ...storedValue };
 
-	function setOpenedSecondLvl(value: string) {
-		const newValue = {
-			firstCategory: storedValue.firstCategory,
-			secondCategory: value,
-			thirdCategory: ''
-		};
+		if (level === 'firstCategory') {
+			newValue[level] = value as number;
+		} else {
+			newValue[level] = value as string;
+		}
 
-		setValue({
-			...storedValue, ...newValue
-		});
-	}
-
-	function setOpenedThirdLvl(value: string) {
-		const newValue = {
-			firstCategory: storedValue.firstCategory,
-			secondCategory: storedValue.secondCategory,
-			thirdCategory: value
-		};
-
-		setValue({
-			...storedValue, ...newValue
-		});
+		newValue.secondCategory = level === 'firstCategory' ? '' : newValue.secondCategory;
+		newValue.thirdCategory = level === 'firstCategory' || level === 'secondCategory' ? '' : newValue.thirdCategory;
+		setValue(newValue);
 	}
 
 	function buildFirstLevel() {
@@ -54,13 +41,12 @@ export default function MenuItems({allMenus}: AllMenuItemsProps) {
 			<ul className={styles.firstLevelList}>
 				{firstLevelMenu.map(menu => (
 					<li key={menu.route}>
-						<button className={cn(styles.firstLevel, {
-							[styles.firstLevelActive]: menu.id == storedValue.firstCategory
+						<span className={cn(styles.firstLevel, {
+							[styles.firstLevelActive]: menu.id === storedValue.firstCategory
 						})}
-						onClick={() => setOpenedFirstLvl(menu.id)}>
-							{menu.icon}
-							<span>{menu.name}</span>
-						</button>
+								  onClick={() => setOpenedCategory('firstCategory', menu.id)}>
+							{menu.icon}{menu.name}
+						</span>
 						{menu.id == storedValue.firstCategory && buildSecondLevel(menu)}
 					</li>
 				))}
@@ -85,7 +71,7 @@ export default function MenuItems({allMenus}: AllMenuItemsProps) {
 				{allMenus[storedValue.firstCategory].map(menu => (
 					<li key={menu._id.secondCategory}>
 						<button className={styles.secondLevel}
-							onClick={() => setOpenedSecondLvl(menu._id.secondCategory)}
+							onClick={() => setOpenedCategory('secondCategory', menu._id.secondCategory)}
 						>
 							{menu._id.secondCategory}
 						</button>
@@ -111,7 +97,7 @@ export default function MenuItems({allMenus}: AllMenuItemsProps) {
 						className={cn(styles.thirdLevel, {
 							[styles.thirdLevelActive]: `/${menuFromFirstLvl}/${menu.alias}` == pathname
 						})}
-						onClick={() => setOpenedThirdLvl(menu.alias)}
+						onClick={() => setOpenedCategory('thirdCategory', menu.alias)}
 					>
 						{menu.title}
 					</Link>

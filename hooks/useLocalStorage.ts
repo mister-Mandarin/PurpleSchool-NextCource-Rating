@@ -2,11 +2,19 @@
 
 import {useEffect, useState} from 'react';
 import {DefaultStateProps} from '@/interfaces/store.interface';
+import {SortEnum} from '@/components/Sort/Sort.props';
 
+// const DEFAULT_STATE: DefaultStateProps = {
+// 	firstCategory: 0,
+// 	secondCategory: 'Аналитика',
+// 	thirdCategory: 'financial-analytics',
+// 	sort: SortEnum.Rating
+// };
 const DEFAULT_STATE: DefaultStateProps = {
-	firstCategory: 0,
-	secondCategory: 'Аналитика',
-	thirdCategory: 'financial-analytics'
+	firstCategory: -1,
+	secondCategory: '',
+	thirdCategory: '',
+	sort: SortEnum.Rating
 };
 
 export const useLocalStorage = (key: string) => {
@@ -22,7 +30,6 @@ export const useLocalStorage = (key: string) => {
 
 	function getValue() {
 		if (typeof window !== 'undefined') {
-			// Client-side-only code
 			const item = localStorage.getItem(key) ;
 			if (!item)  {
 				localStorage.setItem(key, JSON.stringify(DEFAULT_STATE));
@@ -44,5 +51,5 @@ export const useLocalStorage = (key: string) => {
 		}
 	};
 
-	return {storedValue, setValue};
+	return {storedValue, setValue, getValue};
 };

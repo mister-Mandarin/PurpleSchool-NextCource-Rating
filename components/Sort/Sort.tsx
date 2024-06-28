@@ -1,14 +1,11 @@
-'use client';
+
 import SortIcon from './sort.svg';
 import cn from 'classnames';
 import styles from './Sort.module.css';
 import {SortEnum, SortProps} from '@/components/Sort/Sort.props';
-import {useState} from 'react';
 
 
-export default function Sort({sort, ...props}: SortProps) {
-
-	const [sort, setSort] = useState(SortEnum.Rating);
+export default function Sort({sort, setSort, ...props}: SortProps) {
 
 	return (
 		<div className={styles.sort} {...props}>
